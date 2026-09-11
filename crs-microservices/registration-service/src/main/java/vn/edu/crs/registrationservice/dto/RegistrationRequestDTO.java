@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class RegistrationRequestDTO {
-
     @NotNull(message = "studentId khong duoc de trong")
     private Long studentId;
 

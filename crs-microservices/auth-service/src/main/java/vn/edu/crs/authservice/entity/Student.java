@@ -1,5 +1,3 @@
-// path: auth-service/src/main/java/vn/edu/crs/authservice/entity/Student.java
-// purpose: entity thong tin sinh vien, quan he 1-1 voi User
 package vn.edu.crs.authservice.entity;
 
 import jakarta.persistence.*;

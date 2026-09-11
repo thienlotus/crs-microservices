@@ -1,27 +1,65 @@
-import { useEffect, useState } from 'react';
-import { getCourses } from './api/courseApi';
-import type { Course } from './types/course';
+// path: crs-frontend/src/App.tsx
+// purpose: khai bao toan bo Router cua ung dung, thay the noi dung App.tsx cu cua Buoi 6-7
+
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import LoginPage from './pages/LoginPage';
+import CoursesPage from './pages/CoursesPage';
+import AdminCoursesPage from './pages/AdminCoursesPage';
+import ApiKeysPage from './pages/ApiKeysPage';
+import RegisterCoursePage from './pages/RegisterCoursePage';
+import MyRegistrationsPage from './pages/MyRegistrationsPage';
+import Navbar from './components/Navbar';
 
 function App() {
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    getCourses()
-      .then((res) => setCourses(res.data.content))
-      .catch((err) => {
-        console.error(err);
-        setError('Khong ket noi duoc toi he thong. Kiem tra lai api gateway da chay chua.');
-      });
-  }, []);
-
   return (
-    <div style={{ padding: 24, fontFamily: 'sans-serif' }}>
-      <h1>Kiem tra ket noi CRS qua Gateway</h1>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <pre>{JSON.stringify(courses, null, 2)}</pre>
-    </div>
+    <BrowserRouter>
+      <AuthProvider>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Navigate to="/courses" replace />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/courses" element={<CoursesPage />} />
+          <Route
+            path="/admin/courses"
+            element={
+              <ProtectedRoute requiredRole="ADMIN">
+                <AdminCoursesPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/api-keys"
+            element={
+              <ProtectedRoute requiredRole="ADMIN">
+                <ApiKeysPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/register-course"
+            element={
+              <ProtectedRoute requiredRole="STUDENT">
+                <RegisterCoursePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/my-registrations"
+            element={
+              <ProtectedRoute requiredRole="STUDENT">
+                <MyRegistrationsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/courses" replace />} />
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 
 export default App;
+
+

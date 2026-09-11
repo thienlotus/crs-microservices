@@ -1,6 +1,3 @@
-// path: api-gateway/src/main/java/vn/edu/crs/apigateway/filter/AuthHeaderFilter.java
-// purpose: global filter kiem tra su ton tai cua header Authorization cho cac route can dang nhap;
-// day CHI la buoc chan som de tiet kiem tai cho service phia sau, KHONG thay the viec tung service tu xac thuc chu ky JWT
 package vn.edu.crs.apigateway.filter;
 
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -30,8 +27,7 @@ public class AuthHeaderFilter implements GlobalFilter, Ordered {
 
         boolean isOpen = OPEN_PATHS.stream().anyMatch(path::startsWith);
         // GET /api/courses/** la public (xem mon hoc khong can dang nhap), chi POST/PUT/DELETE moi can token
-        boolean isPublicCourseRead = path.startsWith("/api/courses") &&
-                request.getMethod().name().equals("GET");
+        boolean isPublicCourseRead = path.startsWith("/api/courses") && request.getMethod().name().equals("GET");
 
         if (isOpen || isPublicCourseRead) {
             return chain.filter(exchange);

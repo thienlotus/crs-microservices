@@ -1,13 +1,11 @@
-// path: auth-service/src/main/java/vn/edu/crs/authservice/config/DataSeeder.java
-// purpose: tu dong tao 2 tai khoan mau (admin/student) khi ung dung khoi dong lan dau
 package vn.edu.crs.authservice.config;
 
-import vn.edu.crs.authservice.entity.User;
-import vn.edu.crs.authservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import vn.edu.crs.authservice.entity.User;
+import vn.edu.crs.authservice.repository.UserRepository;
 
 @Component
 @RequiredArgsConstructor

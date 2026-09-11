@@ -1,13 +1,11 @@
-// path: auth-service/src/main/java/vn/edu/crs/authservice/controller/AuthController.java
-// purpose: controller cho dang nhap
 package vn.edu.crs.authservice.controller;
 
-import vn.edu.crs.authservice.dto.LoginRequestDTO;
-import vn.edu.crs.authservice.dto.LoginResponseDTO;
-import vn.edu.crs.authservice.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import vn.edu.crs.authservice.dto.LoginRequestDTO;
+import vn.edu.crs.authservice.dto.LoginResponseDTO;
+import vn.edu.crs.authservice.service.AuthService;
 
 @RestController
 @RequestMapping("/auth")

@@ -1,3 +1,6 @@
+// path: crs-frontend/src/types/registration.ts
+// purpose: interface khop voi Registration entity ben registration service (Buoi 3)
+
 export interface Registration {
   id: number;
   studentId: number;

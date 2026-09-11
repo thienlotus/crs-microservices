@@ -1,5 +1,3 @@
-// path: course-service/src/main/java/vn/edu/crs/courseservice/security/JwtAuthFilter.java
-// purpose: tu doc va xac thuc JWT tu header Authorization, KHONG phu thuoc vao viec Gateway da kiem tra hay chua - day la nguyen tac "moi service tu ve"
 package vn.edu.crs.courseservice.security;
 
 import io.jsonwebtoken.Claims;
@@ -30,14 +28,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-
         String authHeader = request.getHeader("Authorization");
-
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
             try {
                 SecretKey key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
-
                 Claims claims = Jwts.parser()
                         .verifyWith(key)
                         .build()
@@ -46,19 +41,17 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
                 String username = claims.getSubject();
                 String role = claims.get("role", String.class);
+                Object rawUserId = claims.get("userId");
+                Long userId = rawUserId instanceof Number ? ((Number) rawUserId).longValue() : null;
 
                 var authToken = new UsernamePasswordAuthenticationToken(
-                        username,
-                        null,
-                        List.of(new SimpleGrantedAuthority("ROLE_" + role))
+                        username, userId, List.of(new SimpleGrantedAuthority("ROLE_" + role))
                 );
-
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             } catch (Exception e) {
                 SecurityContextHolder.clearContext();
             }
         }
-
         filterChain.doFilter(request, response);
     }
 }

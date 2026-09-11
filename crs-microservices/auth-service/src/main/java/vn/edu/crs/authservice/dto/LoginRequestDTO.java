@@ -1,12 +1,15 @@
-// path: auth-service/src/main/java/vn/edu/crs/authservice/dto/LoginRequestDTO.java
-// purpose: DTO nhan username/password khi dang nhap
 package vn.edu.crs.authservice.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class LoginRequestDTO {
+
     @NotBlank(message = "Username khong duoc de trong")
     private String username;
 

@@ -1,0 +1,13 @@
+.idea/
+*.iml
+target/
+**/target/
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+.mvn/
+*.log
+.vscode/
+.DS_Store
+

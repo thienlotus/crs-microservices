@@ -1,5 +1,3 @@
-// path: auth-service/src/main/java/vn/edu/crs/authservice/entity/User.java
-// purpose: entity luu tai khoan dang nhap, mat khau da ma hoa BCrypt, va role
 package vn.edu.crs.authservice.entity;
 
 import jakarta.persistence.*;
@@ -22,7 +20,7 @@ public class User {
     private String username;
 
     @Column(nullable = false)
-    private String password; // luon luu dang da ma hoa BCrypt, khong bao gio luu plain text
+    private String password; // Luu dang da ma hoa BCrypt
 
     @Column(nullable = false, length = 20)
     private String role; // "ADMIN" hoac "STUDENT"

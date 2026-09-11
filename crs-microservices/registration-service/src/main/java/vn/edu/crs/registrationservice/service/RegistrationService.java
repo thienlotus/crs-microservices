@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -26,14 +27,16 @@ public class RegistrationService {
             throw new IllegalStateException("Sinh vien da dang ky mon hoc nay roi");
         }
 
+        // Buoc 1: goi sang course-service de tru cho TRUOC.
+        // Neu buoc nay nem exception, ham se dung lai ngay, KHONG luu Registration.
         courseClient.reserveSeat(dto.getCourseId());
 
+        // Buoc 2: chi luu Registration SAU KHI course-service xac nhan thanh cong.
         Registration registration = new Registration();
         registration.setStudentId(dto.getStudentId());
         registration.setCourseId(dto.getCourseId());
         registration.setTrangThai(DA_DANG_KY);
         registration.setNgayDangKy(LocalDateTime.now());
-
         return registrationRepository.save(registration);
     }
 
@@ -45,9 +48,14 @@ public class RegistrationService {
             throw new IllegalStateException("Dang ky nay da duoc huy truoc do");
         }
 
+        // Goi sang course-service de hoan tra cho TRUOC khi doi trang thai
         courseClient.releaseSeat(registration.getCourseId());
 
         registration.setTrangThai(DA_HUY);
         registrationRepository.save(registration);
+    }
+
+    public List<Registration> getMyRegistrations(Long studentId) {
+        return registrationRepository.findByStudentId(studentId);
     }
 }
